@@ -1,0 +1,31 @@
+name: feature-release
+run-name: ${{github.actor }} is releasing feature
+on:
+  push:
+    branches:
+      - v*.*.*
+jobs:
+  ci-feature:
+    runs-on: ubuntu-latest
+    env:
+      BRANCH_NAME: ${{ github.ref }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PUSH_MAIN }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: "yarn"
+      - run: |
+          git config --global user.email "${{ github.event.pusher.email }}"
+          git config --global user.name "${{ github.actor }}"
+      - name: Release main
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
