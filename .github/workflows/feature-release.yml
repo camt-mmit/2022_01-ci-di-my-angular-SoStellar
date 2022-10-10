@@ -5,7 +5,7 @@ on:
     branches:
       - b*.*.*
 jobs:
-  ci-feature:
+  ci-feature-x:
     runs-on: ubuntu-latest
     env:
       REF_NAME: ${{ github.ref }}
