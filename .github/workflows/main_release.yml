@@ -2,17 +2,17 @@ name: feature-release
 run-name: ${{github.actor }} is releasing feature
 on:
   push:
-    branches:
+    tags:
       - v*.*.*
 jobs:
-  ci-feature:
+  ci-main:
     runs-on: ubuntu-latest
     env:
-      BRANCH_NAME: ${{ github.ref }}
+      REF_NAME: ${{ github.ref }}
     steps:
       - uses: actions/checkout@v3
         with:
-          token: ${{ secrets.PUSH_MAIN }}
+          token: ${{ secrets.RELEASE_TOKEN }}
       - uses: actions/setup-node@v3
         with:
           node-version: "16"
