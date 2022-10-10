@@ -17,6 +17,7 @@ jobs:
         with:
           node-version: "16"
           cache: "yarn"
+      - name: Setup enviroment
       - run: |
           git config --global user.email "${{ github.event.pusher.email }}"
           git config --global user.name "${{ github.actor }}"

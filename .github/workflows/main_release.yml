@@ -3,7 +3,7 @@ run-name: ${{github.actor }} is releasing feature
 on:
   push:
     branches:
-      - v*.*.*
+      - b*.*.*
 jobs:
   ci-main:
     runs-on: ubuntu-latest
