@@ -5,10 +5,10 @@ on:
     branches:
       - v*.*.*
 jobs:
-  ci-feature:
+  ci-main:
     runs-on: ubuntu-latest
     env:
-      BRANCH_NAME: ${{ github.ref }}
+      REF_NAME: ${{ github.ref }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -17,6 +17,8 @@ jobs:
         with:
           node-version: "16"
           cache: "yarn"
+      - name: Set enviroment variables
+        run: echo "TAG_NAME=${REF_NAME:refs/heads/#}" >> $GITHUB_ENV
       - run: |
           git config --global user.email "${{ github.event.pusher.email }}"
           git config --global user.name "${{ github.actor }}"
@@ -25,7 +27,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: ${{ env.TAG_NAME }}
+          release_name: Release ${{ env.TAG_NAME }}
           draft: false
           prerelease: false
