@@ -1,5 +1,5 @@
 name: feature-release
-run-name: ${{github.actor }} is releasing feature
+run-name: ${{ github.actor }} is releasing feature
 on:
   push:
     tags:
