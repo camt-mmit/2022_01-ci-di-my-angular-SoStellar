@@ -5,7 +5,7 @@ on:
     tags:
       - v*.*.*
 jobs:
-  ci-main-max:
+  ci-mainga:
     runs-on: ubuntu-latest
     env:
       REF_NAME: ${{ github.ref }}

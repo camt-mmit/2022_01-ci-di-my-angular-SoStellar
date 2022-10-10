@@ -5,7 +5,7 @@ on:
     branches:
       - b*.*.*
 jobs:
-  ci-feature-max:
+  ci-feature:
     runs-on: ubuntu-latest
     env:
       REF_NAME: ${{ github.ref }}
@@ -36,5 +36,5 @@ jobs:
           git checkout master
           git merge ${{ env.BRANCH_NAME }}
           git push origin master
-          git tag -a ${{ env.BRANCH_NAME }} -m "my version ${{ env.BRANCH_NAME }}"
+          git tag -a ${{ env.BRANCH_NAME }} -m "my version ${{ env.VERSION }}"
           git push origin master --tags
