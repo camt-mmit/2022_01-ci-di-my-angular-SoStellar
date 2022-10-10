@@ -2,8 +2,8 @@ name: feature-release
 run-name: ${{github.actor }} is releasing feature
 on:
   push:
-    branches:
-      - b*.*.*
+    tags:
+      - v*.*.*
 jobs:
   ci-main:
     runs-on: ubuntu-latest
@@ -12,13 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          token: ${{ secrets.PUSH_MAIN }}
+          token: ${{ secrets.RELEASE_TOKEN }}
       - uses: actions/setup-node@v3
         with:
           node-version: "16"
           cache: "yarn"
-      - name: Set enviroment variables
-        run: echo "TAG_NAME=${REF_NAME:refs/heads/#}" >> $GITHUB_ENV
       - run: |
           git config --global user.email "${{ github.event.pusher.email }}"
           git config --global user.name "${{ github.actor }}"
@@ -27,7 +25,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         with:
-          tag_name: ${{ env.TAG_NAME }}
-          release_name: Release ${{ env.TAG_NAME }}
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
